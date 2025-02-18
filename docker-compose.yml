@@ -1,0 +1,5 @@
+services:
+  mongo-database:
+      image: 'mongo:6'
+      ports:
+        - '27017:27017'
