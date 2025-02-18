@@ -18,6 +18,8 @@ const ManageView = ({ user, users = [], update = () => {} }) => {
   const initialValues = user ?? baseValues
   const [state, setState] = useState(initialValues)
   const [errors, setErrors] = useState(null)
+
+  console.log(users)
   
   const jsonState = JSON.stringify(state)
   const jsonBase = JSON.stringify(baseValues)
