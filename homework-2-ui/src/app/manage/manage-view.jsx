@@ -1,5 +1,5 @@
 'use client'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { useRouter } from "next/navigation"
 import Grid2 from "@mui/material/Grid2"
 import TextField from "@mui/material/TextField"
@@ -19,6 +19,20 @@ const ManageView = ({ user, users = [], update = () => {} }) => {
   const [state, setState] = useState(initialValues)
   const [errors, setErrors] = useState(null)
   
+  const jsonState = JSON.stringify(state)
+  const jsonBase = JSON.stringify(baseValues)
+  const jsonEquivalent = jsonState === jsonBase
+
+  const didReset = useRef(jsonEquivalent)
+  
+  useEffect(() => {
+    if (!didReset.current && !user && !jsonEquivalent) {
+      didReset.current = true
+      setState(baseValues)
+      return
+    }
+  }, [user, baseValues])
+
   const handleChange = event => {
     const field = event?.target?.id ?? null
     const value = event?.target?.value ?? null
