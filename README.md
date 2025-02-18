@@ -8,32 +8,48 @@ Author: AJ Angarita
 - NodeJS
 - NPMJS
 
-## Setup - Prerequisites
-Please install MongoDB and ensure that you have mongosh installed. I did this on Linux and there are guides
-for doing it on Windows/MacOS. You do NOT need the database running locally as Docker will handle this.
+## Things to Take Note Of
+**You do not have to use Docker if you do not wish to install it. However, MongoDB must be running locally
+on mongodb://localhost:27017 (which is the default port).**
 <br/>
-Next, install Docker. For a better time visually please install Docker Desktop. Again, I'm not familiar
-with how to do this since this is being developed on a Linux machine. Verify that you have the command `docker compose`
-available within your terminal.
+If you do not use Docker and use a host-controlled MongoDB instance, all will still work, but you
+are responsible for the cleanup and management of said database. This application requires the following MongoDB configuration:
+1. MongoDB must be running locally and accessible (verify via connecting with MongoDB Compass or `mongosh`)
+2. There must be a `homework2` database.
+3. There must be a `users` collection in the `homework2` database.
+
+## (Optional) Setup - With Docker
+**If you would not like to use Docker, please skip this step. It is not required, but I prefer it.**
+Please install Docker and Docker Desktop for your host machine. I did this on Linux and did NOT use 
+Docker Desktop, so I am not linking installation guidelines for that.
+<br/>
+Once Docker is installed and Docker Desktop is available, please go into the root directory of the project.
+Run `docker compose up -d` and you should see a container appear within Docker Desktop.
+<br/>
+If there are any errors you have most likely configured/installed Docker incorrectly.
+<br/>
+Now, you may continue with the "Setup - No Docker" Guide.
+
+## Setup - No Docker
+First, install MongoDB. Most guides should include steps for installing MongoSH, you will need that.
+<br/>
+Windows: https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/#std-label-install-mdb-community-windows
+<br/>
+MacOS: https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/#std-label-install-mdb-community-macos
+<br/>
+Finally, open your terminal of choice and verify that running `mongosh` exists. If it does not connect that is fine, though it should if
+you correctly installed MongoDB.
+<br/>
+You can load the data one of two ways:
+1. Using the `load-data.sh` script. This requires `mongosh`.
+2. Manually importing the JSON data. If you have Mongo Compass, create the `homework2` database and `users` collection, then import the .json file in this repository into that collection.
+**If you are doing this the Docker method, please search how to disable the database service on your host OS.**
 <br/>
 Finally you will need NodeJS and NPMJS. They may come bundled together but you can ensure they have installed correctly by
 verifying the commands `npm --version` and `node --version` output something without error.
 <br/>
 
 ## Setup - Starting Your Services
-In the root directory of the repository there is a file called "docker-compose.yml". Run the following in said directory: <br/>
-`docker compose up -d`
-<br/>
-This may take a few moments, but if you open Docker Desktop (if installed), you should see the Mongo 6 Container running. Alternatively,
-you can verify by connecting with the Mongo Shell by running `mongosh`.
-<br/>
-<br/>
-<br/>
-Next, import the sample data. Please run the script "load-sample-data.sh". It may require you to give it executable permissions. If it fails,
-you most likely need to verify you installed the Mongo Shell correctly. The error output should tell you all you need to know. Alternatively, if you 
-installed MongoDB Compass (this may come bundled) you can import the "sample-data.json" file directly. You will need to create the "homework2" database
-and "users" collection manually, though. **THIS I HAVE NOT TESTED AND WILL NOT BE HELD ACCOUNTABLE FOR**.
-<br/>
 Now, you can start the UI! This is done with NextJS and it handles the visual aspect and all CRUD operations. Do the following.
 1. `cd homework-2-ui && npm install` (this may take some time to complete)
 2. `npm run dev`
