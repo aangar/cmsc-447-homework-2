@@ -1,6 +1,6 @@
 const { MongoClient } = require("mongodb")
 
-const URI = process.env.MONGO_URI
+const URI = 'mongodb://localhost' 
 const DB = 'homework2'
 const COLLECTION = 'users'
 
