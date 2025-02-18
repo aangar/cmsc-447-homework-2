@@ -23,3 +23,22 @@ export const findAll = async() => {
         }
     }
 }
+
+export const upsert = async(user) => {
+  try {
+    const client = new MongoClient(URI)
+    const accessor = client.db(DB).collection(COLLECTION)
+    const result = await accessor
+      .updateOne(
+        { _id: user._id },
+        { $set: { name: user.name, points: user.points, _id: user._id } },
+        { upsert: true }
+      )
+
+    await client.close()
+
+    return { success: result?.modifiedCount > 0 || result?.upsertedCount > 0 }
+  } catch (e) {
+    return { success: false, error: e.message  }
+  }
+}
