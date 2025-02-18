@@ -23,16 +23,20 @@ const NoUsersWarning = ({ error }) =>
 const CustomTableHeader = () =>
   <TableHead>
     <TableRow>
+      <TableCell>Edit</TableCell>
       <TableCell>ID</TableCell>
       <TableCell>Name</TableCell>
       <TableCell>Points</TableCell>
+      <TableCell>Delete</TableCell>
     </TableRow>
   </TableHead>
 
 const CustomTableRow = ({ user }) =>
-  <TableRow key={user?.id}>
-    <TableCell>{user?.id}</TableCell>
+  <TableRow key={user?._id}>
+    <TableCell>{user?._id}</TableCell>
+    <TableCell>{user?._id}</TableCell>
     <TableCell>{user?.name}</TableCell>
+    <TableCell>{user?.points}</TableCell>
     <TableCell>{user?.points}</TableCell>
   </TableRow>
 
@@ -46,7 +50,7 @@ const UsersTable = ({ users = [] }) =>
         <Table>
           <CustomTableHeader/>
           <TableBody>
-            {users.map(user => <CustomTableRow user={user} />)}
+            {users.map((user, idx) => <CustomTableRow key={idx} user={user} />)}
           </TableBody>
         </Table>
       </TableContainer>
@@ -59,7 +63,7 @@ const MainView = ({ users }) => {
     return <NoUsersWarning error={error} />
   }
 
-  return <UsersTable users={users} />
+  return <UsersTable users={data} />
 }
 
 export default MainView
